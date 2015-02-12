@@ -5,7 +5,7 @@
 //  Created by Jonathan Tribouharet
 //
 
-#import "JTCircleView.h"
+#import "JTRectView.h"
 
 // http://stackoverflow.com/questions/17038017/ios-draw-filled-circles
 
@@ -37,9 +37,7 @@
     CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     CGContextSetFillColorWithColor(ctx, [self.color CGColor]);
     
-    CGContextAddEllipseInRect(ctx, rect);
-    CGContextFillEllipseInRect(ctx, rect);
-    
+    CGContextFillRect (ctx, self.bounds);
     CGContextFillPath(ctx);
 }
 

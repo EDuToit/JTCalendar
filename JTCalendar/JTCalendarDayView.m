@@ -6,7 +6,7 @@
 //
 
 #import "JTCalendarDayView.h"
-#import "JTCircleView.h"
+#import "JTRectView.h"
 
 @interface JTCalendarDayView (){
     UIView *backgroundView;
@@ -58,8 +58,8 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 {
     isSelected = NO;
     self.isOtherMonth = NO;
-    //This removes function that display touch on calendar.
-    self.canSelectDay = NO;
+    //This removes function that display touch on calendar
+    self.canSelectDay =NO;
     
 
     {
@@ -83,9 +83,10 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
         dotView.hidden = YES;
     }
     
+    
     {
+        
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouch)];
-
         self.userInteractionEnabled = YES;
         [self addGestureRecognizer:gesture];
     }
@@ -146,7 +147,7 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 
 - (void)didTouch
 {
-    
+    self.canSelectDay = NO;
     if (self.canSelectDay)
     {
     [self setSelected:YES animated:YES];
@@ -171,6 +172,9 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
     else if(currentMonthIndex == (calendarMonthIndex + 12 - 1) % 12){
         [self.calendarManager loadPreviousMonth];
     }
+    }
+    
+    
 }
 
 - (void)didDaySelected:(NSNotification *)notification
@@ -204,6 +208,12 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
             circleView.color = [self.calendarManager.calendarAppearance dayCircleColorSelected];
             textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorSelected];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorSelected];
+            
+            if ([self.calendarManager.dataCache haveEvent:self.date]){
+                textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorWithEvent];
+                
+            }
+            
         }
         else{
             circleView.color = [self.calendarManager.calendarAppearance dayCircleColorSelectedOtherMonth];
@@ -216,9 +226,12 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
     }
     else if([self isToday]){
         if(!self.isOtherMonth){
+            
             circleView.color = [self.calendarManager.calendarAppearance dayCircleColorToday];
             textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorToday];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorToday];
+           
+            
         }
         else{
             circleView.color = [self.calendarManager.calendarAppearance dayCircleColorTodayOtherMonth];
@@ -230,13 +243,32 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
         if(!self.isOtherMonth){
             textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColor];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColor];
+            
+            if ([self.calendarManager.dataCache haveEvent:self.date]){
+                textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorWithEvent];
+                
+            }
+            
+            
         }
         else{
             textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorOtherMonth];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorOtherMonth];
+            if ([self.calendarManager.dataCache haveEvent:self.date]){
+                textLabel.textColor = [UIColor whiteColor];
+            }
+
+            
         }
         
         opacity = 0.;
+        
+  //  if ([self.calendarManager.dataCache haveEvent:self.date]){
+  //          textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorWithEvent];
+  //      }
+
+        
+        
     }
     
     if(animated){
@@ -259,7 +291,11 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 
 - (void)reloadData
 {
-    dotView.hidden = ![self.calendarManager.dataCache haveEvent:self.date];
+    //dotView.hidden = ![self.calendarManager.dataCache haveEvent:self.date];
+    
+    if ([self.calendarManager.dataCache haveEvent:self.date]){
+    textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorWithEvent];
+    }
     
     BOOL selected = [self isSameDate:[self.calendarManager currentDateSelected]];
     [self setSelected:selected animated:NO];

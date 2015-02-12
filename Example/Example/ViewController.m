@@ -28,6 +28,9 @@
         self.calendar.calendarAppearance.dayCircleRatio = 9. / 10.;
         self.calendar.calendarAppearance.ratioContentMenu = 2.;
         self.calendar.calendarAppearance.focusSelectedDayChangeMode = YES;
+        self.calendar.calendarAppearance.dayTextColorOtherMonth = [UIColor whiteColor];
+        self.calendar.calendarAppearance.dayTextColorWithEvent = [UIColor colorWithRed:152./256. green:200./256. blue:157./256. alpha:1.];
+        self.calendar.calendarAppearance.dayCircleColorToday = [UIColor colorWithRed:152./256. green:200./256. blue:157./256. alpha:1.];
         
         // Customize the text for each month
         self.calendar.calendarAppearance.monthBlock = ^NSString *(NSDate *date, JTCalendar *jt_calendar){
@@ -69,20 +72,6 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.calendar repositionViews];
-}
-
-#pragma mark - Buttons callback
-
-- (IBAction)didGoTodayTouch
-{
-    [self.calendar setCurrentDate:[NSDate date]];
-}
-
-- (IBAction)didChangeModeTouch
-{
-    self.calendar.calendarAppearance.isWeekMode = !self.calendar.calendarAppearance.isWeekMode;
-    
-    [self transitionExample];
 }
 
 #pragma mark - JTCalendarDataSource

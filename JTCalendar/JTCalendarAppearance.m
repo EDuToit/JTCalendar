@@ -55,6 +55,7 @@
     [self setDayTextColorForAll:[UIColor blackColor]];
     
     self.dayTextColorOtherMonth = [UIColor colorWithRed:152./256. green:147./256. blue:157./256. alpha:1.];
+    self.dayTextColorWithEvent = [UIColor colorWithRed:152./256. green:200./256. blue:157./256. alpha:1.];
 
     self.dayCircleColorSelected = [UIColor redColor];
     self.dayTextColorSelected = [UIColor whiteColor];
