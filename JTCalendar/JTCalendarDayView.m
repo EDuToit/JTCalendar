@@ -255,7 +255,7 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
             textLabel.textColor = [self.calendarManager.calendarAppearance dayTextColorOtherMonth];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorOtherMonth];
             if ([self.calendarManager.dataCache haveEvent:self.date]){
-                textLabel.hidden = YES;
+                textLabel.textColor = [self.calendarManager.calendarAppearance dayBackgroundColor];
             }
 
             
