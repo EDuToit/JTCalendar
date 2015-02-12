@@ -6,7 +6,6 @@
 //
 
 #import "JTCalendarDayView.h"
-
 #import "JTCircleView.h"
 
 @interface JTCalendarDayView (){
@@ -59,6 +58,9 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 {
     isSelected = NO;
     self.isOtherMonth = NO;
+    //This removes function that display touch on calendar.
+    self.canSelectDay = NO;
+    
 
     {
         backgroundView = [UIView new];
@@ -144,6 +146,9 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 
 - (void)didTouch
 {
+    
+    if (self.canSelectDay)
+    {
     [self setSelected:YES animated:YES];
     [self.calendarManager setCurrentDateSelected:self.date];
     
